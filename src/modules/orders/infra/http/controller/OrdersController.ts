@@ -9,9 +9,9 @@ export default class OrdersController {
   public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const findOrder = container.resolve(FindOrderService);
+    const findOther = container.resolve(FindOrderService);
 
-    const order = await findOrder.execute({ id });
+    const order = await findOther.execute({ id });
 
     return response.json(order);
   }
@@ -21,8 +21,11 @@ export default class OrdersController {
 
     const createOrder = container.resolve(CreateOrderService);
 
-    const order = await createOrder.execute({ customer_id, products });
+    const customer = await createOrder.execute({
+      customer_id,
+      products,
+    });
 
-    return response.json(order);
+    return response.json(customer);
   }
 }

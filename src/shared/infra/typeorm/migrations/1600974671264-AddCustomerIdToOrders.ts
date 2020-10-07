@@ -1,9 +1,12 @@
-import { MigrationInterface,
+import {
+  MigrationInterface,
   QueryRunner,
   TableColumn,
-  TableForeignKey,} from "typeorm";
+  TableForeignKey,
+} from 'typeorm';
 
-export class AddCustomerIdToOrders1602106429989   implements MigrationInterface {
+export default class AddCustomerIdToOrders1600974671264
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
       'orders',
@@ -17,7 +20,7 @@ export class AddCustomerIdToOrders1602106429989   implements MigrationInterface 
     await queryRunner.createForeignKey(
       'orders',
       new TableForeignKey({
-        name: 'OrdersCustomer',
+        name: 'OrdersCustomers',
         columnNames: ['customer_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'customers',
@@ -27,7 +30,7 @@ export class AddCustomerIdToOrders1602106429989   implements MigrationInterface 
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('orders', 'OrdersCustomer');
+    await queryRunner.dropForeignKey('orders', 'OrdersCustomers');
 
     await queryRunner.dropColumn('orders', 'customer_id');
   }
